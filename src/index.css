@@ -119,3 +119,23 @@
 .lenis.lenis-smooth {
     scroll-behavior: auto !important;
 }
+
+/* Homepage project slider */
+@keyframes slide-reveal-next {
+    from { clip-path: inset(0 0 0 100%); }
+    to { clip-path: inset(0 0 0 0); }
+}
+@keyframes slide-reveal-prev {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+}
+@keyframes slide-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+.slide-reveal-next { animation: slide-reveal-next 1.1s cubic-bezier(0.76, 0, 0.24, 1) both; }
+.slide-reveal-prev { animation: slide-reveal-prev 1.1s cubic-bezier(0.76, 0, 0.24, 1) both; }
+.slide-progress { animation-name: slide-progress; animation-timing-function: linear; animation-fill-mode: both; }
+@media (prefers-reduced-motion: reduce) {
+    .slide-reveal-next, .slide-reveal-prev { animation: none; }
+}

@@ -12,7 +12,7 @@ function App() {
       <EditorialMarquee />
       <Portfolio />
       <Fincorp />
-      <EnquiryForm />
+      <EnquiryForm eyebrow="04 — Get in Touch" />
     </PageLayout>
   );
 }
