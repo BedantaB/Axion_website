@@ -51,14 +51,14 @@ export const Fincorp = () => (
           <Reveal key={p.title} delay={i * 0.1}>
             <div
               data-testid={`fincorp-product-${p.title.toLowerCase().replace(/\s+/g, "-")}`}
-              className="group relative h-full bg-[#1A1A1A] border border-white/5 hover:border-gold/30 p-9 transition-colors duration-500 overflow-hidden"
+              className="group relative h-full bg-[#1A1A1A] border border-white/5 hover:border-gold/30 p-7 lg:p-9 transition-colors duration-500 overflow-hidden"
             >
               <span className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="flex items-start justify-between">
                 <p.icon size={30} strokeWidth={1} className="text-gold" />
                 <ArrowUpRight size={18} strokeWidth={1.5} className="text-[#A0A0A0] opacity-0 -translate-x-2 translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-gold" />
               </div>
-              <h3 className="mt-8 font-serif text-2xl sm:text-3xl font-light text-[#F5F5F0]">{p.title}</h3>
+              <h3 className="mt-8 font-serif text-2xl sm:text-3xl md:text-2xl lg:text-3xl font-light text-[#F5F5F0]">{p.title}</h3>
               <p className="mt-4 text-sm font-light text-[#A0A0A0] leading-relaxed">{p.text}</p>
               <ul className="mt-7 space-y-3 border-t border-white/5 pt-6">
                 {p.points.map((pt) => (

@@ -6,7 +6,6 @@ const items = [
   "AXION FINCORP",
   "AXION INFRASTRUCTURE",
   "AXION INTERIOR & CRAFTING",
-  "AXION HOSPITALITY",
 ];
 
 export const EditorialMarquee = () => (

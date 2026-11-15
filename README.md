@@ -6,6 +6,7 @@ Vite + React 19 + Tailwind CSS 3 multi-page site.
 | URL | Source |
 |---|---|
 | `/` | `src/App.jsx` |
+| `/realty/` | `src/pages/RealtyPage.jsx` |
 | `/interiors/` | `src/pages/InteriorsPage.jsx` |
 | `/infrastructure/` | `src/pages/InfrastructurePage.jsx` |
 | `/fincorp/` | `src/pages/FincorpPage.jsx` |

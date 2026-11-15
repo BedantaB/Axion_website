@@ -7,12 +7,12 @@ import { MapPin, Mail, Send, CheckCircle2 } from "lucide-react";
 const API = `${import.meta.env.VITE_BACKEND_URL ?? ""}/api`;
 
 const interests = [
-  "Axion Realty & Infrastructure",
+  "Axion Realty — Residential & Commercial Projects",
+  "Axion Infrastructure — JV & Turnkey Construction",
   "Axion Fincorp — Home Loan",
   "Axion Fincorp — Loan Against Property",
   "Axion Fincorp — Construction Loan",
   "Axion Interior & Crafting",
-  "Axion Hospitality — Vishal's Hotel & Resort",
   "General / Partnership",
 ];
 
@@ -71,7 +71,7 @@ export const EnquiryForm = ({ eyebrow = "05 — Get in Touch", defaultInterest =
               </div>
             </div>
             <p className="text-sm font-light text-[#A0A0A0] leading-relaxed border-l border-gold/30 pl-6">
-              Connect with our Realty, Financial Advisory, Interiors or Hospitality desks directly —
+              Connect with our Realty, Infrastructure, Financial Advisory or Interiors desks directly —
               every enquiry is answered by a dedicated relationship manager.
             </p>
           </Reveal>

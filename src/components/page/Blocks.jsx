@@ -368,7 +368,7 @@ export const DataTable = ({ columns, rows, caption, note }) => (
           <dl className="space-y-3">
             {columns.slice(1).map((c) => (
               <div key={c.key} className="flex justify-between gap-6">
-                <dt className="text-[9px] tracking-[0.3em] uppercase text-[#A0A0A0] pt-1">{c.label}</dt>
+                <dt className="shrink-0 text-[9px] tracking-[0.3em] uppercase text-[#A0A0A0] pt-1">{c.label}</dt>
                 <dd className={`text-sm text-right ${c.accent ? "text-gold" : "font-light text-[#C8C8C2]"}`}>{r[c.key]}</dd>
               </div>
             ))}
@@ -380,17 +380,130 @@ export const DataTable = ({ columns, rows, caption, note }) => (
   </Reveal>
 );
 
-/** Large headline figures: [[value, label]] */
-export const StatRow = ({ stats }) => (
-  <div className="mt-20 grid sm:grid-cols-3 gap-12 sm:gap-6 border-t border-gold/10 pt-16">
-    {stats.map(([value, label], i) => (
-      <Reveal key={label} delay={i * 0.1} className="text-center">
-        <p className="font-serif text-7xl lg:text-8xl font-light text-gold-gradient leading-none">{value}</p>
-        <p className="mt-6 text-[11px] tracking-[0.3em] uppercase text-[#C8C8C2]">{label}</p>
+/** Large headline figures: [[value, label]]. Three or four per row. */
+export const StatRow = ({ stats }) => {
+  const four = stats.length >= 4;
+  return (
+    <div
+      className={`mt-20 grid gap-12 border-t border-gold/10 pt-16 ${
+        four ? "grid-cols-2 lg:grid-cols-4 gap-x-6" : "sm:grid-cols-3 sm:gap-6"
+      }`}
+    >
+      {stats.map(([value, label], i) => (
+        <Reveal key={label} delay={i * 0.1} className="text-center">
+          <p
+            className={`font-serif font-light text-gold-gradient leading-none ${
+              four ? "text-5xl sm:text-6xl xl:text-7xl" : "text-7xl lg:text-8xl"
+            }`}
+          >
+            {value}
+          </p>
+          <p className="mt-6 text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.3em] uppercase text-[#C8C8C2] leading-relaxed">
+            {label}
+          </p>
+        </Reveal>
+      ))}
+    </div>
+  );
+};
+
+/** Icon + label + value rows: [{ icon, label, value }]. Stacks label over value on small screens. */
+export const FactList = ({ items }) => (
+  <dl className="border-t border-gold/10">
+    {items.map((it, i) => (
+      <Reveal key={it.label} delay={i * 0.06}>
+        <div className="flex gap-5 py-6 border-b border-white/5">
+          <span className="flex items-center justify-center w-10 h-10 shrink-0 border border-gold/30 text-gold">
+            <it.icon size={17} strokeWidth={1.25} />
+          </span>
+          <div className="min-w-0">
+            <dt className="text-[10px] tracking-[0.35em] uppercase text-gold/80">{it.label}</dt>
+            <dd className="mt-1.5 text-sm sm:text-base font-light text-[#F5F5F0] leading-relaxed break-words">{it.value}</dd>
+          </div>
+        </div>
+      </Reveal>
+    ))}
+  </dl>
+);
+
+/** Side-by-side detail cards: [{ eyebrow?, title, points: [[label, text]], featured? }] */
+export const DetailCards = ({ items, className = "mt-16" }) => (
+  <div className={`${className} grid md:grid-cols-2 gap-5`}>
+    {items.map((it, i) => (
+      <Reveal key={it.title} delay={i * 0.08}>
+        <div
+          className={`h-full p-8 lg:p-10 border transition-colors duration-500 ${
+            it.featured ? "bg-gold/[0.05] border-gold/30" : "bg-[#1A1A1A] border-white/5 hover:border-gold/30"
+          }`}
+        >
+          {it.eyebrow && <p className="text-[10px] tracking-[0.4em] uppercase text-gold">{it.eyebrow}</p>}
+          <h3 className="mt-4 font-serif text-2xl sm:text-3xl font-light text-[#F5F5F0] leading-tight">{it.title}</h3>
+          <div className="gold-hairline w-20 mt-6" />
+          <dl className="mt-6 space-y-4">
+            {it.points.map(([label, text]) => (
+              <div key={label} className="grid sm:grid-cols-[7.5rem_minmax(0,1fr)] gap-1 sm:gap-4">
+                <dt className="text-[10px] tracking-[0.25em] uppercase text-[#A0A0A0] pt-1">{label}</dt>
+                <dd className="text-sm font-light text-[#F5F5F0] leading-relaxed break-words">{text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </Reveal>
     ))}
   </div>
 );
+
+/** Chapter divider between groups of content. */
+export const ChapterBand = ({ id, eyebrow, title, goldWord, text }) => (
+  <section
+    id={id}
+    className="relative px-6 lg:px-10 py-24 lg:py-32 border-y border-gold/10 overflow-hidden"
+  >
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,rgba(212,175,55,0.07),transparent_60%)]" />
+    <Reveal className="relative max-w-7xl mx-auto">
+      <span className="block w-12 h-px bg-gold mb-8" />
+      <p className="text-[10px] tracking-[0.5em] uppercase text-gold mb-6">{eyebrow}</p>
+      <h2 className="font-serif font-light text-4xl sm:text-5xl lg:text-7xl tracking-tight text-[#F5F5F0] leading-[1.05] max-w-5xl">
+        {title} {goldWord && <span className="text-gold-gradient italic">{goldWord}</span>}
+      </h2>
+      {text && <p className="mt-8 max-w-2xl text-sm sm:text-base font-light text-[#A0A0A0] leading-relaxed">{text}</p>}
+    </Reveal>
+  </section>
+);
+
+/**
+ * Single-series horizontal bar comparison: [{ label, value, display }].
+ * Bars scale to the largest value; the figure is printed beside every bar.
+ */
+export const BarCompare = ({ rows, caption, note }) => {
+  const max = Math.max(...rows.map((r) => r.value));
+  return (
+    <Reveal className="mt-16">
+      <figure className="bg-[#141414] border border-white/5 p-6 sm:p-10">
+        {caption && <figcaption className="sr-only">{caption}</figcaption>}
+        <ul className="space-y-6 sm:space-y-5">
+          {rows.map((r) => (
+            <li
+              key={r.label}
+              title={`${r.label}: ${r.display}`}
+              className="group grid grid-cols-[1fr_auto] sm:grid-cols-[minmax(0,15rem)_1fr_6.5rem] items-center gap-x-6 gap-y-3"
+            >
+              <span className="text-sm font-light text-[#F5F5F0] leading-snug">{r.label}</span>
+              <span className="sm:order-last text-right font-serif text-lg text-[#F5F5F0] whitespace-nowrap">{r.display}</span>
+              <span className="col-span-2 sm:col-span-1 block h-2.5 bg-white/[0.05] rounded-[4px] overflow-hidden">
+                <span
+                  className="block h-full rounded-[4px] bg-gold/80 transition-colors duration-300 group-hover:bg-gold"
+                  style={{ width: `${(r.value / max) * 100}%` }}
+                />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </figure>
+      {note && <p className="mt-6 text-[11px] font-light text-[#666] leading-relaxed">{note}</p>}
+    </Reveal>
+  );
+};
 
 /** Centered pull-quote. */
 export const PullQuote = ({ quote, text }) => (

@@ -68,8 +68,8 @@ export const Hero = () => {
           className="mt-8 max-w-xl mx-auto text-sm sm:text-base font-light text-[#C8C8C2] leading-relaxed"
           data-testid="hero-subtitle"
         >
-          Redefining excellence across realty, finance, infrastructure, interiors and hospitality
-          — one group, five visions of luxury.
+          Redefining excellence across realty, finance, infrastructure and interiors
+          — one group, four visions of luxury.
         </motion.p>
 
         <motion.div

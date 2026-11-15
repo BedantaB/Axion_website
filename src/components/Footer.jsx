@@ -8,10 +8,10 @@ const columns = [
   {
     title: "Entities",
     links: [
-      ["Axion Realty & Infrastructure", pageUrl("infrastructure")],
+      ["Axion Realty", pageUrl("realty")],
+      ["Axion Infrastructure", pageUrl("infrastructure")],
       ["Axion Fincorp", pageUrl("fincorp")],
       ["Axion Interior & Crafting", pageUrl("interiors")],
-      ["Axion Hospitality", homeUrl("#entities")],
     ],
   },
   {
@@ -70,7 +70,7 @@ export const Footer = () => (
         </div>
         <p className="mt-8 max-w-sm text-sm font-light text-[#A0A0A0] leading-relaxed">
           A multi-disciplinary conglomerate driven by visionary leadership and uncompromising
-          quality — across realty, finance, interiors and hospitality in Delhi NCR.
+          quality — across realty, infrastructure, finance and interiors in Delhi NCR.
         </p>
         <a
           href="mailto:support@axionspace.com"
