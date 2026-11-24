@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { toast } from "sonner";
 import { Reveal, SectionHeading } from "./Reveal";
 import { MapPin, Mail, Send, CheckCircle2 } from "lucide-react";
+import { submitToSheet } from "@/lib/sheets";
 
-// Google Apps Script web app that appends each enquiry to a private Google Sheet.
-// See apps-script/Code.gs and README.md.
-const SHEETS_URL = import.meta.env.VITE_SHEETS_WEBAPP_URL;
 
 const interests = [
   "Axion Realty — Residential & Commercial Projects",
@@ -36,14 +34,7 @@ export const EnquiryForm = ({ eyebrow = "05 — Get in Touch", defaultInterest =
     }
     setLoading(true);
     try {
-      if (!SHEETS_URL) throw new Error("VITE_SHEETS_WEBAPP_URL is not set");
-      // Form-encoded body keeps this a "simple" request, which Apps Script accepts cross-origin.
-      const res = await fetch(SHEETS_URL, {
-        method: "POST",
-        body: new URLSearchParams({ ...form, page: window.location.pathname }),
-      });
-      const data = await res.json();
-      if (!data.ok) throw new Error(data.error || "Submission failed");
+      await submitToSheet(form);
       setDone(true);
       setForm(initial);
       toast.success("Enquiry received. Our team will reach out shortly.");

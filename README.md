@@ -22,10 +22,12 @@ npm run build    # production build in dist/
 npm run preview  # serve dist/
 ```
 
-## Enquiry form → Google Sheet
-Each enquiry is added as a row to a Google Sheet that only you can see. The
-form posts to a small Google Apps Script ([apps-script/Code.gs](apps-script/Code.gs))
-that can append rows but cannot read the sheet.
+## Enquiry & careers forms → Google Sheet
+Each enquiry is added as a row to a Google Sheet that only you can see, and each
+job application from `/careers/` goes to a "Careers" tab with the resume saved to
+a private Google Drive folder ("Axion Careers — Resumes"). Both forms post to a
+small Google Apps Script ([apps-script/Code.gs](apps-script/Code.gs)) that can add
+rows and files but cannot read the sheet or folder.
 
 One-time setup:
 1. Create a new Google Sheet (e.g. "Axion Enquiries") in your Google account.
@@ -41,11 +43,12 @@ One-time setup:
 6. On Vercel: Project → Settings → Environment Variables → add
    `VITE_SHEETS_WEBAPP_URL` with the same URL, then redeploy.
 
-The first enquiry creates an "Enquiries" tab with the headers
-Submitted At, Name, Phone, Email, Interest, Message, Page.
+The first enquiry creates an "Enquiries" tab, and the first application a
+"Careers" tab (Role, Compensation, Notice Period, Resume link, etc.).
 
 If you later edit `Code.gs`, use **Deploy → Manage deployments → Edit → Version:
-New version** so the URL stays the same.
+New version** so the URL stays the same. If Google asks for new permissions (e.g.
+Drive, for resumes), run any function once from the editor and approve them.
 
 ## Things to edit
 - Phone / WhatsApp numbers: `src/components/FloatingContact.jsx` (currently `919318411787`)

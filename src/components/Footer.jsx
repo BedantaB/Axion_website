@@ -38,13 +38,14 @@ const columns = [
       ["Leadership Team", pageUrl("leadership-team")],
       ["Board of Directors", pageUrl("board-of-directors")],
       ["Community Impact", null],
-      ["Careers", null],
+      ["Careers", pageUrl("careers")],
       ["Contact Us", "#contact"],
     ],
   },
 ];
 
 const offices = ["Noida", "Gurgaon", "Kolkata"];
+const upcomingOffices = ["Dubai", "Goa", "Bombay", "Pune"];
 
 const linkClass = "text-xs font-light text-[#A0A0A0] leading-relaxed";
 
@@ -106,6 +107,15 @@ export const Footer = () => (
             {offices.map((o) => (
               <li key={o} className={`flex items-center gap-2 ${linkClass}`}>
                 <MapPin size={12} strokeWidth={1.5} className="text-gold/70 shrink-0" />
+                {o}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8 mb-4 text-[9px] tracking-[0.35em] uppercase text-gold/70">Opening Soon</p>
+          <ul className="space-y-3" data-testid="footer-upcoming-offices">
+            {upcomingOffices.map((o) => (
+              <li key={o} className="flex items-center gap-2 text-xs font-light text-[#777] leading-relaxed">
+                <MapPin size={12} strokeWidth={1.5} className="text-gold/35 shrink-0" />
                 {o}
               </li>
             ))}
