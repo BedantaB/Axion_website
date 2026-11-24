@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { toast } from "sonner";
 import { Reveal, SectionHeading } from "./Reveal";
 import { MapPin, Mail, Send, CheckCircle2 } from "lucide-react";
 
-const API = `${import.meta.env.VITE_BACKEND_URL ?? ""}/api`;
+// Google Apps Script web app that appends each enquiry to a private Google Sheet.
+// See apps-script/Code.gs and README.md.
+const SHEETS_URL = import.meta.env.VITE_SHEETS_WEBAPP_URL;
 
 const interests = [
   "Axion Realty — Residential & Commercial Projects",
@@ -20,7 +21,7 @@ const field =
   "w-full bg-[#141414] border border-white/10 focus:border-gold/60 text-[#F5F5F0] text-sm font-light px-5 py-4 placeholder:text-[#666] transition-colors duration-300 outline-none";
 
 export const EnquiryForm = ({ eyebrow = "05 — Get in Touch", defaultInterest = interests[0] }) => {
-  const initial = { name: "", phone: "", email: "", interest: defaultInterest, message: "" };
+  const initial = { name: "", phone: "", email: "", interest: defaultInterest, message: "", website: "" };
   const [form, setForm] = useState(initial);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
@@ -35,7 +36,14 @@ export const EnquiryForm = ({ eyebrow = "05 — Get in Touch", defaultInterest =
     }
     setLoading(true);
     try {
-      await axios.post(`${API}/enquiries`, form);
+      if (!SHEETS_URL) throw new Error("VITE_SHEETS_WEBAPP_URL is not set");
+      // Form-encoded body keeps this a "simple" request, which Apps Script accepts cross-origin.
+      const res = await fetch(SHEETS_URL, {
+        method: "POST",
+        body: new URLSearchParams({ ...form, page: window.location.pathname }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Submission failed");
       setDone(true);
       setForm(initial);
       toast.success("Enquiry received. Our team will reach out shortly.");
@@ -103,6 +111,8 @@ export const EnquiryForm = ({ eyebrow = "05 — Get in Touch", defaultInterest =
                 <input data-testid="enquiry-name" required placeholder="Full Name *" value={form.name} onChange={set("name")} className={field} />
                 <input data-testid="enquiry-phone" required placeholder="Phone *" value={form.phone} onChange={set("phone")} className={field} />
               </div>
+              {/* Honeypot: hidden from people, bots fill it and get silently dropped. */}
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={form.website} onChange={set("website")} className="hidden" />
               <input data-testid="enquiry-email" required type="email" placeholder="Email Address *" value={form.email} onChange={set("email")} className={field} />
               <select data-testid="enquiry-interest" value={form.interest} onChange={set("interest")} className={`${field} appearance-none cursor-pointer`}>
                 {interests.map((i) => (

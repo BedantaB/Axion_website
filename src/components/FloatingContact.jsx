@@ -2,8 +2,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Phone, MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = "919999999999";
-const CALL_NUMBER = "+919999999999";
+const WHATSAPP_NUMBER = "919318411787";
+const CALL_NUMBER = "+919318411787";
 
 export const FloatingContact = () => (
   <motion.div
