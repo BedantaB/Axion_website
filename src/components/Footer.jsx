@@ -1,7 +1,7 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import { Monogram } from "./Logo";
-import { homeUrl, pageUrl } from "@/lib/links";
+import { pageUrl } from "@/lib/links";
 
 // [label, href]. A null href renders as plain text until that page exists.
 const columns = [
@@ -34,9 +34,9 @@ const columns = [
   {
     title: "Company",
     links: [
-      ["About Us", homeUrl("#portfolio")],
-      ["Leadership Team", null],
-      ["Board of Directors", null],
+      ["About Us", pageUrl("about")],
+      ["Leadership Team", pageUrl("leadership-team")],
+      ["Board of Directors", pageUrl("board-of-directors")],
       ["Community Impact", null],
       ["Careers", null],
       ["Contact Us", "#contact"],
